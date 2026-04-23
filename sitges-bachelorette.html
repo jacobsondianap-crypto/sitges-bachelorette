@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sitges Bachelorette · May 8–9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #C2476A;
+    --rose-light: #F5D5DF;
+    --rose-dark: #7A1F3A;
+    --sage: #6B8F71;
+    --sage-light: #D8EAD9;
+    --sand: #F2EDE6;
+    --sand-deep: #E8DDD0;
+    --warm-white: #FDFAF7;
+    --ink: #1E1510;
+    --ink-soft: #5C4A3D;
+    --gold: #C4963A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--warm-white);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--sand);
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 80%, rgba(194,71,106,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(107,143,113,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(196,150,58,0.06) 0%, transparent 70%);
+  }
+
+  .hero-border {
+    position: absolute;
+    inset: 20px;
+    border: 0.5px solid rgba(194,71,106,0.2);
+    pointer-events: none;
+  }
+
+  .hero-border::before {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    border: 0.5px solid rgba(194,71,106,0.1);
+  }
+
+  /* Corner ornaments */
+  .corner {
+    position: absolute;
+    width: 40px; height: 40px;
+    opacity: 0.4;
+  }
+  .corner svg { width: 100%; height: 100%; }
+  .corner-tl { top: 28px; left: 28px; }
+  .corner-tr { top: 28px; right: 28px; transform: scaleX(-1); }
+  .corner-bl { bottom: 28px; left: 28px; transform: scaleY(-1); }
+  .corner-br { bottom: 28px; right: 28px; transform: scale(-1); }
+
+  .hero-content { position: relative; text-align: center; padding: 2rem; }
+
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rose);
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 10vw, 96px);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.4s;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--rose-dark);
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 4vw, 32px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.6s;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.7s;
+  }
+  .hero-divider-line { width: 60px; height: 0.5px; background: var(--rose); opacity: 0.4; }
+  .hero-divider-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--rose); opacity: 0.6; }
+
+  .hero-dates {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.85s;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.2s;
+  }
+  .scroll-hint span { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-soft); opacity: 0.5; }
+  .scroll-arrow { width: 1px; height: 30px; background: linear-gradient(to bottom, var(--rose), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+
+  /* ITINERARY */
+  .itinerary { max-width: 760px; margin: 0 auto; padding: 5rem 1.5rem; }
+
+  .day-block { margin-bottom: 5rem; }
+
+  .day-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid var(--sand-deep);
+  }
+
+  .day-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--sand-deep);
+    flex-shrink: 0;
+  }
+
+  .day-info {}
+  .day-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .day-date-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0.6;
+    font-weight: 300;
+  }
+
+  /* Items */
+  .items { display: flex; flex-direction: column; gap: 0; }
+
+  .item {
+    display: grid;
+    grid-template-columns: 72px 1px 1fr;
+    gap: 0 1.5rem;
+    position: relative;
+  }
+
+  .item-time {
+    text-align: right;
+    padding-top: 20px;
+  }
+  .item-time .t {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--ink);
+    display: block;
+    line-height: 1;
+  }
+  .item-time .ampm {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0.5;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .item-line-col { display: flex; flex-direction: column; align-items: center; }
+  .item-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-top: 22px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .item-dot.fri { background: var(--rose); }
+  .item-dot.sat { background: var(--sage); }
+  .item-connector { flex: 1; width: 0.5px; background: var(--sand-deep); }
+
+  .item-body {
+    padding: 16px 0 28px;
+  }
+
+  .item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .item-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 300;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .item-address {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--rose-dark);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    padding: 4px 10px;
+    border: 0.5px solid rgba(194,71,106,0.25);
+    border-radius: 99px;
+    background: rgba(194,71,106,0.04);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .item-address:hover { background: rgba(194,71,106,0.09); border-color: rgba(194,71,106,0.4); }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .tag-dress { background: var(--rose-light); color: var(--rose-dark); }
+  .tag-dress.casual { background: var(--sage-light); color: #2E5233; }
+  .tag-food { background: #FEF3DC; color: #6B4A10; }
+  .tag-fun { background: #EDE9F5; color: #4A2F7A; }
+  .tag-icon { font-size: 10px; }
+
+  /* FOOTER */
+  .footer {
+    background: var(--ink);
+    color: var(--warm-white);
+    text-align: center;
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(194,71,106,0.15) 0%, transparent 70%);
+  }
+  .footer-content { position: relative; }
+  .footer-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--rose-light);
+    margin-bottom: 1rem;
+  }
+  .footer-sub {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    font-weight: 300;
+  }
+  .footer-divider {
+    display: flex; align-items: center; gap: 1rem; justify-content: center;
+    margin: 1.5rem auto;
+  }
+  .footer-divider-line { width: 40px; height: 0.5px; background: rgba(194,71,106,0.4); }
+  .footer-divider-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--rose); opacity: 0.5; }
+
+  /* PACKING LIST */
+  .pack-section {
+    background: var(--warm-white);
+    padding: 5rem 1.5rem;
+  }
+  .pack-inner { max-width: 760px; margin: 0 auto; }
+  .pack-header { text-align: center; margin-bottom: 3rem; }
+  .pack-eyebrow {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+  }
+  .pack-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(30px, 5vw, 46px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .pack-subtitle {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 300;
+    opacity: 0.7;
+  }
+  .pack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .pack-cat {
+    background: var(--warm-white);
+    border: 0.5px solid var(--sand-deep);
+    border-radius: 14px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .pack-cat.visible { opacity: 1; transform: translateY(0); }
+  .pack-cat-head {
+    padding: 12px 14px 10px;
+    border-bottom: 0.5px solid var(--sand-deep);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pack-cat-icon { font-size: 15px; flex-shrink: 0; }
+  .pack-cat-name {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--ink);
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+  .pack-items { padding: 10px 14px 14px; display: flex; flex-direction: column; gap: 0; }
+  .pack-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 0.5px solid var(--sand-deep);
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 300;
+    line-height: 1.4;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.15s;
+  }
+  .pack-item:last-child { border-bottom: none; }
+  .pack-item.checked { opacity: 0.35; text-decoration: line-through; }
+  .pack-check {
+    width: 13px;
+    height: 13px;
+    border: 0.5px solid var(--sand-deep);
+    border-radius: 3px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    margin-top: 1px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .pack-item.checked .pack-check {
+    background: var(--rose);
+    border-color: var(--rose);
+  }
+  .pack-check-tick {
+    width: 7px; height: 5px;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .pack-item.checked .pack-check-tick { opacity: 1; }
+  .pack-note {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 11px;
+    color: var(--ink-soft);
+    opacity: 0.5;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 0.8; transform: scaleY(1.15); }
+  }
+
+  .item { opacity: 0; transform: translateY(12px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .item.visible { opacity: 1; transform: translateY(0); }
+
+  /* SLEEPING ARRANGEMENTS */
+  .sleep-section {
+    background: var(--sand);
+    padding: 5rem 1.5rem;
+  }
+  .sleep-inner { max-width: 760px; margin: 0 auto; }
+  .sleep-header { text-align: center; margin-bottom: 3rem; }
+  .sleep-eyebrow {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rose);
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+  }
+  .sleep-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(30px, 5vw, 46px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink);
+  }
+  .bnbs { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .bnb-card {
+    background: var(--warm-white);
+    border: 0.5px solid var(--sand-deep);
+    border-radius: 16px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .bnb-card.visible { opacity: 1; transform: translateY(0); }
+  .bnb-card-top {
+    padding: 1.25rem 1.25rem 1rem;
+    border-bottom: 0.5px solid var(--sand-deep);
+  }
+  .bnb-badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 99px;
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+  .bnb-badge.one { background: var(--rose-light); color: var(--rose-dark); }
+  .bnb-badge.two { background: var(--sage-light); color: #2E5233; }
+  .bnb-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .bnb-link {
+    font-size: 11px;
+    color: var(--rose-dark);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .bnb-link:hover { opacity: 1; }
+  .bnb-beds { padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 10px; }
+  .bed-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--sand);
+    border-radius: 10px;
+  }
+  .bed-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .bed-names {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .bed-label {
+    font-size: 10px;
+    color: var(--ink-soft);
+    opacity: 0.6;
+    margin-bottom: 1px;
+    letter-spacing: 0.5px;
+  }
+  .bed-amp { color: var(--ink-soft); opacity: 0.5; font-weight: 300; }
+
+  /* Mobile */
+  @media (max-width: 560px) {
+    .item { grid-template-columns: 60px 1px 1fr; gap: 0 1rem; }
+    .item-time .t { font-size: 15px; }
+    .day-num { font-size: 44px; }
+    .itinerary { padding: 3rem 1rem; }
+    .bnbs { grid-template-columns: 1fr; }
+    .sleep-section { padding: 3rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-border"></div>
+
+  <!-- Corner ornaments -->
+  <div class="corner corner-tl">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 38 L2 2 L38 2" stroke="#C2476A" stroke-width="0.5" fill="none"/>
+      <circle cx="2" cy="2" r="2" fill="#C2476A" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="corner corner-tr">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 38 L2 2 L38 2" stroke="#C2476A" stroke-width="0.5" fill="none"/>
+      <circle cx="2" cy="2" r="2" fill="#C2476A" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="corner corner-bl">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 38 L2 2 L38 2" stroke="#C2476A" stroke-width="0.5" fill="none"/>
+      <circle cx="2" cy="2" r="2" fill="#C2476A" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="corner corner-br">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 38 L2 2 L38 2" stroke="#C2476A" stroke-width="0.5" fill="none"/>
+      <circle cx="2" cy="2" r="2" fill="#C2476A" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Bachelorette Weekend</div>
+    <div class="hero-title"><em>Sitges</em></div>
+    <div class="hero-sub">a weekend by the sea</div>
+    <div class="hero-divider">
+      <div class="hero-divider-line"></div>
+      <div class="hero-divider-dot"></div>
+      <div class="hero-divider-line"></div>
+    </div>
+    <div class="hero-dates">May 8 – 9, 2025 &nbsp;·&nbsp; Catalonia</div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>the plan</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ITINERARY -->
+<main class="itinerary">
+
+  <!-- FRIDAY -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-num">01</div>
+      <div class="day-info">
+        <div class="day-name">Friday</div>
+        <div class="day-date-label">May 8, 2025</div>
+      </div>
+    </div>
+
+    <div class="items">
+
+      <div class="item">
+        <div class="item-time"><span class="t">4:00</span><span class="ampm">pm</span></div>
+        <div class="item-line-col"><div class="item-dot fri"></div><div class="item-connector"></div></div>
+        <div class="item-body">
+          <div class="item-name">Head to Sitges</div>
+          <div class="item-desc">Pack your bags and hit the road — only ~40 minutes from Barcelona along the coast.</div>
+          <div class="tags">
+            <span class="tag tag-dress casual">Comfy travel outfit</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-time"><span class="t">8:00</span><span class="ampm">pm</span></div>
+        <div class="item-line-col"><div class="item-dot fri"></div><div class="item-connector"></div></div>
+        <div class="item-body">
+          <div class="item-name">Dinner at Le Patio Jardin Terrasse</div>
+          <div class="item-desc">French restaurant with a candlelit terrace courtyard. Groups get a welcome cava on the house. 3-course menu ~€29. ⭐ 4.3</div>
+          <a class="item-address" href="https://maps.google.com/?q=Carrer+Bonaire+26+Sitges+Barcelona" target="_blank">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.24 1 3 3.24 3 6c0 4 5 9 5 9s5-5 5-9c0-2.76-2.24-5-5-5zm0 6.5C6.62 7.5 5.5 6.38 5.5 5S6.62 2.5 8 2.5 10.5 3.62 10.5 5 9.38 7.5 8 7.5z" fill="currentColor"/></svg>
+            Carrer Bonaire, 26, Sitges
+          </a>
+          <div class="tags">
+            <span class="tag tag-dress">Smart casual — flowy dress or chic co-ord</span>
+            <span class="tag tag-food">3 courses · ~€29</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-time"><span class="t">10:00</span><span class="ampm">pm</span></div>
+        <div class="item-line-col"><div class="item-dot fri"></div></div>
+        <div class="item-body">
+          <div class="item-name">Games at the house!</div>
+          <div class="item-desc">Wine, laughs, and bachelorette chaos — the main event of the night.</div>
+          <div class="tags">
+            <span class="tag tag-fun">Pyjamas very much welcome</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SATURDAY -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-num">02</div>
+      <div class="day-info">
+        <div class="day-name">Saturday</div>
+        <div class="day-date-label">May 9, 2025</div>
+      </div>
+    </div>
+
+    <div class="items">
+
+      <div class="item">
+        <div class="item-time"><span class="t">10:00</span><span class="ampm">am</span></div>
+        <div class="item-line-col"><div class="item-dot sat"></div><div class="item-connector"></div></div>
+        <div class="item-body">
+          <div class="item-name">Brunch by Chef Giwon</div>
+          <div class="item-desc">Private chef experience at the house. No rushing — just good food, good company, and morning sunshine.</div>
+          <div class="tags">
+            <span class="tag tag-dress casual">Casual morning vibes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-time"><span class="t">12:00</span><span class="ampm">pm–1pm</span></div>
+        <div class="item-line-col"><div class="item-dot sat"></div><div class="item-connector"></div></div>
+        <div class="item-body">
+          <div class="item-name">Pilates / Yoga Fusion</div>
+          <div class="item-desc">El Living Wellness — boutique studio with sea views and a stunning outdoor terrace. ⭐ 5.0</div>
+          <a class="item-address" href="https://maps.google.com/?q=Av+Sofia+65+Sitges+Barcelona" target="_blank">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.24 1 3 3.24 3 6c0 4 5 9 5 9s5-5 5-9c0-2.76-2.24-5-5-5zm0 6.5C6.62 7.5 5.5 6.38 5.5 5S6.62 2.5 8 2.5 10.5 3.62 10.5 5 9.38 7.5 8 7.5z" fill="currentColor"/></svg>
+            Av. Sofia, 65, Sitges
+          </a>
+          <div class="tags">
+            <span class="tag tag-dress casual">Workout gear — leggings + sports top</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-time"><span class="t">1:00</span><span class="ampm">pm–4pm</span></div>
+        <div class="item-line-col"><div class="item-dot sat"></div><div class="item-connector"></div></div>
+        <div class="item-body">
+          <div class="item-name">Beach time</div>
+          <div class="item-desc">Three hours of Mediterranean sun, sea, and doing absolutely nothing productive.</div>
+          <div class="tags">
+            <span class="tag tag-dress casual">Swimwear + cover-up</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-time"><span class="t">5:00</span><span class="ampm">pm–6:30pm</span></div>
+        <div class="item-line-col"><div class="item-dot sat"></div><div class="item-connector"></div></div>
+        <div class="item-body">
+          <div class="item-name">Wine Tasting at Celler del Hospital de Sitges</div>
+          <div class="item-desc">Historic organic winery in the heart of Sitges. Local Malvasia wines, guided tasting, and a cheese board. ⭐ 4.8</div>
+          <a class="item-address" href="https://maps.google.com/?q=Plaça+de+Joan+Duran+i+Ferret+Sitges" target="_blank">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.24 1 3 3.24 3 6c0 4 5 9 5 9s5-5 5-9c0-2.76-2.24-5-5-5zm0 6.5C6.62 7.5 5.5 6.38 5.5 5S6.62 2.5 8 2.5 10.5 3.62 10.5 5 9.38 7.5 8 7.5z" fill="currentColor"/></svg>
+            Plaça de Joan Duran i Ferret, Sitges
+          </a>
+          <div class="tags">
+            <span class="tag tag-dress">Elevated casual — sundress or linen set</span>
+            <span class="tag tag-food">Cheese board included</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-time"><span class="t">7:00</span><span class="ampm">pm</span></div>
+        <div class="item-line-col"><div class="item-dot sat"></div></div>
+        <div class="item-body">
+          <div class="item-name">Dinner or head back to Barcelona</div>
+          <div class="item-desc">Stay for one last meal in Sitges, or make your way home feeling très bien.</div>
+          <div class="tags">
+            <span class="tag tag-dress casual">Whatever you're wearing</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- SLEEPING ARRANGEMENTS -->
+<section class="sleep-section">
+  <div class="sleep-inner">
+    <div class="sleep-header">
+      <div class="sleep-eyebrow">Where you're sleeping</div>
+      <div class="sleep-title">Sleeping Arrangements</div>
+    </div>
+    <div class="bnbs">
+
+      <div class="bnb-card">
+        <div class="bnb-card-top">
+          <div class="bnb-badge one">Apartment 1</div>
+          <div class="bnb-name">Blue Home Sidi Bou Said</div>
+          <a class="bnb-link" href="https://www.airbnb.com/rooms/49269546?unique_share_id=b99c92a6-f93e-401f-b87f-c7af6b0b1c3b&viralityEntryPoint=1&s=76" target="_blank">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M13 1H3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V3a2 2 0 00-2-2zm-1 11H4V4h8v8zm-1-6H5V4.5h6V6zm0 3H5V7.5h6V9z" fill="currentColor" opacity="0.6"/></svg>
+            View on Airbnb
+          </a>
+        </div>
+        <div class="bnb-beds">
+          <div class="bed-row">
+            <div class="bed-icon">🛏</div>
+            <div>
+              <div class="bed-label">Bed 1</div>
+              <div class="bed-names">Shreya <span class="bed-amp">&amp;</span> Alex</div>
+            </div>
+          </div>
+          <div class="bed-row">
+            <div class="bed-icon">🛏</div>
+            <div>
+              <div class="bed-label">Bed 2</div>
+              <div class="bed-names">Diana <span class="bed-amp">&amp;</span> Giwon</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bnb-card">
+        <div class="bnb-card-top">
+          <div class="bnb-badge two">Apartment 2</div>
+          <div class="bnb-name">Blue Home Ibiza</div>
+          <a class="bnb-link" href="https://www.airbnb.com/rooms/49270136?unique_share_id=d7ae9508-30ca-488b-8734-9427d27bbb59&viralityEntryPoint=1&s=76" target="_blank">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M13 1H3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V3a2 2 0 00-2-2zm-1 11H4V4h8v8zm-1-6H5V4.5h6V6zm0 3H5V7.5h6V9z" fill="currentColor" opacity="0.6"/></svg>
+            View on Airbnb
+          </a>
+        </div>
+        <div class="bnb-beds">
+          <div class="bed-row">
+            <div class="bed-icon">🛏</div>
+            <div>
+              <div class="bed-label">Bed 1</div>
+              <div class="bed-names">Analiese <span class="bed-amp">&amp;</span> Alejandra</div>
+            </div>
+          </div>
+          <div class="bed-row">
+            <div class="bed-icon">🛏</div>
+            <div>
+              <div class="bed-label">Bed 2</div>
+              <div class="bed-names">Christine <span class="bed-amp">&amp;</span> Anobi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PACKING LIST -->
+<section class="pack-section">
+  <div class="pack-inner">
+    <div class="pack-header">
+      <div class="pack-eyebrow">Don't forget</div>
+      <div class="pack-title">Packing List</div>
+      <div class="pack-subtitle">Tap items to check them off as you pack</div>
+    </div>
+    <div class="pack-grid">
+
+      <div class="pack-cat">
+        <div class="pack-cat-head">
+          <span class="pack-cat-icon">👗</span>
+          <span class="pack-cat-name">Clothing &amp; Outfits</span>
+        </div>
+        <div class="pack-items">
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Smart casual dinner outfit</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Elevated casual for wine tasting</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Comfy travel / brunch outfit</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Pyjamas / sleepwear</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Underwear &amp; socks</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Light jacket or wrap (evenings)</div>
+        </div>
+      </div>
+
+      <div class="pack-cat">
+        <div class="pack-cat-head">
+          <span class="pack-cat-icon">🩱</span>
+          <span class="pack-cat-name">Beach &amp; Wellness</span>
+        </div>
+        <div class="pack-items">
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Swimsuit / bikini</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Beach cover-up</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Workout leggings &amp; sports top</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Sports bra</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Yoga mat (or check with El Living)</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Beach towel</div>
+        </div>
+      </div>
+
+      <div class="pack-cat">
+        <div class="pack-cat-head">
+          <span class="pack-cat-icon">👡</span>
+          <span class="pack-cat-name">Shoes</span>
+        </div>
+        <div class="pack-items">
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Dinner / going-out shoes</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Sandals or flip flops (beach)</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Trainers / sneakers (pilates)</div>
+        </div>
+      </div>
+
+      <div class="pack-cat">
+        <div class="pack-cat-head">
+          <span class="pack-cat-icon">🧴</span>
+          <span class="pack-cat-name">Toiletries &amp; Beauty</span>
+        </div>
+        <div class="pack-items">
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Sunscreen (SPF 50+)</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Shampoo, conditioner, body wash</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Toothbrush &amp; toothpaste</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Skincare routine</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Makeup &amp; remover</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Deodorant</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Hair ties &amp; hair tools</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>After-sun lotion</div>
+        </div>
+      </div>
+
+      <div class="pack-cat">
+        <div class="pack-cat-head">
+          <span class="pack-cat-icon">☀️</span>
+          <span class="pack-cat-name">Beach Bag</span>
+        </div>
+        <div class="pack-items">
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Sunglasses</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Hat or cap</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Reusable water bottle</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Tote / beach bag</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Book or e-reader</div>
+        </div>
+      </div>
+
+      <div class="pack-cat">
+        <div class="pack-cat-head">
+          <span class="pack-cat-icon">📱</span>
+          <span class="pack-cat-name">Tech &amp; Essentials</span>
+        </div>
+        <div class="pack-items">
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Phone charger</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Portable power bank</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>ID / DNI / passport</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Cash &amp; card</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Any medications</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Headphones</div>
+        </div>
+      </div>
+
+      <div class="pack-cat">
+        <div class="pack-cat-head">
+          <span class="pack-cat-icon">🎉</span>
+          <span class="pack-cat-name">Bachelorette Extras</span>
+        </div>
+        <div class="pack-items">
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Bachelorette games / props</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Matching outfits / sashes / accessories</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Gift for the bride-to-be</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Snacks for the road</div>
+          <div class="pack-item" onclick="toggle(this)"><div class="pack-check"><svg class="pack-check-tick" viewBox="0 0 7 5" fill="none"><polyline points="0.5,2.5 2.5,4.5 6.5,0.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Good vibes only</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="pack-note">Checks reset on page refresh — screenshot your progress!</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-title">Here's to the bride-to-be</div>
+    <div class="footer-divider">
+      <div class="footer-divider-line"></div>
+      <div class="footer-divider-dot"></div>
+      <div class="footer-divider-line"></div>
+    </div>
+    <div class="footer-sub">May 8 – 9 &nbsp;·&nbsp; Sitges, Catalonia</div>
+  </div>
+</footer>
+
+<script>
+  function toggle(el) {
+    el.classList.toggle('checked');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.item, .bnb-card, .pack-cat').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
